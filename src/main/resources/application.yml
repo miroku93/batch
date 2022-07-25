@@ -22,5 +22,29 @@ logging:
 main:
   allow-bean-definition-overriding=true 
 
+profiles:
+  logging-infologging:  
+  file: logs/application.log  
+  level:    
+  org.thymeleaf: INFO    
+  org.springframework.web: INFO    
+  org.hibernate.SQL: INFO    
+  org.quartz.core: INFO    
+  org.h2.server.web: INFO 
+---
+profiles:
+  logging-debuglogging:  
+  file: logs/application.log  level:    
+  org.thymeleaf: DEBUG    
+  org.springframework.web: DEBUG    
+  org.hibernate.SQL: DEBUG    
+  org.quartz.core: DEBUG    
+  org.h2.server.web: DEBUG 
+  
+---
+profiles:
+  logging-daily
+  logging:  
+    config: classpath:logback-spring.xml
     
  
