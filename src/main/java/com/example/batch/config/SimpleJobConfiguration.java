@@ -33,7 +33,7 @@ public class SimpleJobConfiguration {
 	
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
-	private final EntityManagerFactory entityManagerFactory;
+
 	
 	// exampleJob 생성
 	@Bean
@@ -63,48 +63,48 @@ public class SimpleJobConfiguration {
 //				.tasklet(new ExampleTasklet()).build();	
 	}
 	
-	@Bean
-    @StepScope
-    public JpaPagingItemReader<Market> reader(@Value("#{jobParameters[requestDate]}")  String requestDate) throws Exception {
-        log.info("==> reader value : " + requestDate);
-
-        Map<String, Object> parameterValues = new HashMap<>();
-        parameterValues.put("price", 1000);
-        
-        return new JpaPagingItemReaderBuilder<Market>()
-                .pageSize(10)
-                .parameterValues(parameterValues)
-                .queryString("SELECT m FROM Market m WHERE m.price >= : price")
-                .entityManagerFactory(entityManagerFactory)
-                .name("JpaPagingItemReader")
-                .build();
-    }
-
-    @Bean
-    @StepScope
-    public ItemProcessor<Market, Market> processor(@Value("#{jobParameters[requestDate]}")  String requestDate){
-        return new ItemProcessor<Market, Market>() {
-            @Override
-            public Market process(Market market) throws Exception {
-
-                log.info("==> processor Market : " + market);
-                log.info("==> processor value : " + requestDate);
-
-                // 100원 추가
-                market.setPrice(market.getPrice() + 100);
-
-                return market;
-            }
-        };
-    }
-
-    @Bean
-    @StepScope
-    public JpaItemWriter<Market> writer(@Value("#{jobParameters[requestDate]}")  String requestDate){
-        log.info("==> writer value : " + requestDate);
-
-        return new JpaItemWriterBuilder<Market>()
-                .entityManagerFactory(entityManagerFactory)
-                .build();
-    }
+//	@Bean
+//    @StepScope
+//    public JpaPagingItemReader<Market> reader(@Value("#{jobParameters[requestDate]}")  String requestDate) throws Exception {
+//        log.info("==> reader value : " + requestDate);
+//
+//        Map<String, Object> parameterValues = new HashMap<>();
+//        parameterValues.put("price", 1000);
+//        
+//        return new JpaPagingItemReaderBuilder<Market>()
+//                .pageSize(10)
+//                .parameterValues(parameterValues)
+//                .queryString("SELECT m FROM Market m WHERE m.price >= : price")
+//                .entityManagerFactory(entityManagerFactory)
+//                .name("JpaPagingItemReader")
+//                .build();
+//    }
+//
+//    @Bean
+//    @StepScope
+//    public ItemProcessor<Market, Market> processor(@Value("#{jobParameters[requestDate]}")  String requestDate){
+//        return new ItemProcessor<Market, Market>() {
+//            @Override
+//            public Market process(Market market) throws Exception {
+//
+//                log.info("==> processor Market : " + market);
+//                log.info("==> processor value : " + requestDate);
+//
+//                // 100원 추가
+//                market.setPrice(market.getPrice() + 100);
+//
+//                return market;
+//            }
+//        };
+//    }
+//
+//    @Bean
+//    @StepScope
+//    public JpaItemWriter<Market> writer(@Value("#{jobParameters[requestDate]}")  String requestDate){
+//        log.info("==> writer value : " + requestDate);
+//
+//        return new JpaItemWriterBuilder<Market>()
+//                .entityManagerFactory(entityManagerFactory)
+//                .build();
+//    }
 }
