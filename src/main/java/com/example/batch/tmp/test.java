@@ -18,7 +18,7 @@ public class test {
 		t2.func2();		
 	}
 	
-		public void test_func2() {
+	public void test_func2() {
 		//값 참조용
 		//test2 t2 = new test2();
 		List<Map<String, Object>> listMap = t2.getListMap();
